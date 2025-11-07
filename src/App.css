@@ -40,3 +40,27 @@
 .read-the-docs {
   color: #888;
 }
+
+td{
+  border: 1px solid #999;
+  /* padding: 0.5rem; */
+  /* text-align: left; */
+  color: mediumorchid;
+  /* background-color: black; */
+}
+th {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  background-color: #222;
+  color: white;
+}
+thead th {
+  position: sticky;
+  top: 0;
+}
+
+#del { 
+  margin-left: 10;
+   color: rgb(245, 31, 3);
+   background-color: rgb(0, 0, 0);
+}

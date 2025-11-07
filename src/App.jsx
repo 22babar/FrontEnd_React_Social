@@ -1,21 +1,54 @@
 import "./App.css";
+import Swal from 'sweetalert2';
 
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: "btn btn-success",
+    cancelButton: "btn btn-danger"
+  },
+  buttonsStyling: false
+});
+swalWithBootstrapButtons.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonText: "Yes, delete it!",
+  cancelButtonText: "No, cancel!",
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+    });
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire({
+      title: "Cancelled",
+      text: "Your imaginary file is safe :)",
+      icon: "error"
+    });
+  }
+});
+
 function App() {
-  const [users, setUsers] = useState([]);
-  const [form, setForm] = useState({ name: "", email: "" });
+  const [user, setUsers] = useState([]);
+  const [form, setForm] = useState({ id:"", FirstName: "", LastName: "" , City: "", Country: "", Email: "", PhoneNo: "", Password: "", UserName: "" ,CreatedAt: ""});
 
   useEffect(() => {
     fetchUsers();
-  }, [ ]);
+  }, []);
 
-  let s = axios.create({
-    baseURL: 'http://localhost:3000'
-  })
+
   const fetchUsers = async () => {
-    const res = await s.axios.get("/api/user");
+    const res = await axios.get("http://localhost:3000/api/user");
     setUsers(res.data);
   };
 
@@ -23,7 +56,7 @@ function App() {
    // 🗑️ Delete user
   const handleDelete = async (id) => {
   try {
-    await s.axios.delete(`/api/user/${id}`);
+    await axios.delete(`http://localhost:3000/api/user/${id}`);
     fetchUsers(); // refresh list
   } catch (err) {
     console.error("Delete failed:", err);
@@ -38,9 +71,9 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await s.axios.post("/api/user", form);
+    await axios.post("http://localhost:3000/api/user", form);
     setForm({ name: "", email: "" });
-    const res = await s.axios.get("/api/user");
+    const res = await axios.get("http://localhost:3000/api/user");
     setUsers(res.data);
      fetchUsers(); // Refresh list
   };
@@ -49,6 +82,43 @@ function App() {
     <div style={{ padding: 20 }}>
       <h1>Users</h1>
 
+        <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Email</th>
+            <th>Phone No</th>
+            <th>Password</th>
+            <th>User Name</th>
+            <th>Created At</th>
+            <th>Delete Button</th>
+          </tr>
+        </thead>
+        <tbody>
+          {user.map((u) => (
+            <tr key={u.id}>
+              <td>{u.id}</td>
+              <td>{u.FirstName}</td>
+              <td>{u.LastName}</td>
+              <td>{u.City}</td>
+              <td>{u.Country}</td>
+              <td>{u.Email}</td>
+              <td>{u.PhoneNo}</td>
+              <td>{u.Password}</td>
+              <td>{u.UserName}</td>
+              <td>{u.Created_At}</td>
+              <td>{<button id="del" onClick={() => handleDelete(u.id)}            >
+              Delete
+            </button>
+         }</td>
+            </tr>
+          ))}
+        </tbody>
+        </table>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Name"
@@ -63,19 +133,7 @@ function App() {
         <button type="submit">Add User</button>
       </form>
 
-      <ul>
-        {users.map((u) => (
-          <li key={u.id}>
-            {u.name} ({u.email})
-            <button
-              onClick={() => handleDelete(u.id)}
-              style={{ marginLeft: 10, color: "red" }}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+     
     </div>
   );
 }
