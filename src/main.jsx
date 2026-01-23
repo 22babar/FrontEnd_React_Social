@@ -9,6 +9,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
+import UserGri from './UserGrid.jsx';
 // Register all Community and Enterprise features
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
