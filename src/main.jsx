@@ -4,18 +4,23 @@ import { createRoot } from 'react-dom/client';
 import UserGrid from './UserGrid.jsx';
 // import App from './App.jsx';
 
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'; 
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import UserGri from './UserGrid.jsx';
+import PostGrid from './PostGrid.jsx';
+import App1 from './App1.jsx';
+import App from './App.jsx';
 // Register all Community and Enterprise features
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
+    {/* <App /> 
+    <App1 /> */}
     <UserGrid />
+    <PostGrid />/
   </StrictMode>,
 );
