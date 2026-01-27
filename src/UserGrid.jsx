@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import Swal from 'sweetalert2';
+// import './index.css';
+import './App.css';
 // import 'ag-grid-community/styles/ag-grid.css';           // core grid CSS (required)
 import 'ag-grid-community/styles/ag-theme-quartz.css';   // quartz theme
 import axios from 'axios';
@@ -20,7 +22,7 @@ const UserGrid = () => {
     { headerName: 'Password',   field: 'Password',  editable: true, floatingFilter: true },
     { headerName: 'Username',   field: 'UserName',  editable: true, floatingFilter: true }, // ← fixed typo
     { headerName: 'Created At', field: 'Created_At', editable: true, floatingFilter: true },
-    { headerName: 'Updated At', field: 'Updated_At', editable: true, floatingFilter: true },
+    { headerName: 'Updated At', field: 'Updated_at', editable: true, floatingFilter: true },
     {
       headerName: 'Actions',
       cellRenderer: (params) => (
@@ -120,9 +122,8 @@ const UserGrid = () => {
   if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading users...</div>;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Users (React + AG Grid + Express + MySQL)</h2>
-
+    <div >
+      <h2 className="mb-2 text-cyan-400 font-bold text-4xl">Users (React + AG Grid + Express + MySQL)</h2>
       <button
         onClick={fetchData}
         style={{
@@ -137,7 +138,7 @@ const UserGrid = () => {
       >
         Refresh Data
       </button>
-
+    <h1 className="text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4" >Created by:  Babar Ali</h1>
       <div
         className="ag-theme-quartz-dark"
         style={{ height: 750, width: '100%' }}

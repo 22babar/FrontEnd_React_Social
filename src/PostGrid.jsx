@@ -170,8 +170,7 @@ const PostGrid = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>Posts (React + AG Grid + Express + MySQL)</h2>
-
+      <h2 className="mb-2 text-cyan-400 font-bold text-4xl">Posts (React + AG Grid + Express + MySQL)</h2>
       <button
         onClick={fetchData}
         style={{
@@ -186,6 +185,7 @@ const PostGrid = () => {
       >
         Refresh Data
       </button>
+    <h1 className="text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4" >Created by:  Babar Ali</h1>
 
       <div
         className='ag-theme-quartz-dark'
