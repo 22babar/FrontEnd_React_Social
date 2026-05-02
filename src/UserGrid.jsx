@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 // import './index.css';
 import './App.css';
 // import 'ag-grid-community/styles/ag-grid.css';           // core grid CSS (required)
-import 'ag-grid-community/styles/ag-theme-quartz.css';   // quartz theme
+import 'ag-grid-community/styles/ag-theme-quartz.css'; // quartz theme
 import axios from 'axios';
 
 const UserGrid = () => {
@@ -12,17 +12,70 @@ const UserGrid = () => {
   const [loading, setLoading] = useState(true);
 
   const columnDefs = [
-    { headerName: 'ID', field: 'id', width: 90, filter: true, floatingFilter: true },
-    { headerName: 'First Name', field: 'FirstName', editable: true, filter: 'agTextColumnFilter', floatingFilter: true },
-    { headerName: 'Last Name',  field: 'LastName',  editable: true, floatingFilter: true },
-    { headerName: 'City',       field: 'City',      editable: true, floatingFilter: true },
-    { headerName: 'Country',    field: 'Country',   editable: true, filter: true, floatingFilter: true },
-    { headerName: 'Email',      field: 'Email',     editable: true, floatingFilter: true },
-    { headerName: 'Phone No',   field: 'PhoneNo',   editable: true, floatingFilter: true },
-    { headerName: 'Password',   field: 'Password',  editable: true, floatingFilter: true },
-    { headerName: 'Username',   field: 'UserName',  editable: true, floatingFilter: true }, // ← fixed typo
-    { headerName: 'Created At', field: 'Created_At', editable: true, floatingFilter: true },
-    { headerName: 'Updated At', field: 'Updated_at', editable: true, floatingFilter: true },
+    {
+      headerName: 'ID',
+      field: 'id',
+      width: 90,
+      filter: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'First Name',
+      field: 'FirstName',
+      editable: true,
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Last Name',
+      field: 'LastName',
+      editable: true,
+      floatingFilter: true,
+    },
+    { headerName: 'City', field: 'City', editable: true, floatingFilter: true },
+    {
+      headerName: 'Country',
+      field: 'Country',
+      editable: true,
+      filter: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Email',
+      field: 'Email',
+      editable: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Phone No',
+      field: 'PhoneNo',
+      editable: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Password',
+      field: 'Password',
+      editable: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Username',
+      field: 'UserName',
+      editable: true,
+      floatingFilter: true,
+    }, // ← fixed typo
+    {
+      headerName: 'Created At',
+      field: 'Created_At',
+      editable: true,
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Updated At',
+      field: 'Updated_at',
+      editable: true,
+      floatingFilter: true,
+    },
     {
       headerName: 'Actions',
       cellRenderer: (params) => (
@@ -42,7 +95,9 @@ const UserGrid = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3001/api/users');
+      const res = await axios.get(
+        'https://backend-express-social.vercel.app/api/users',
+      );
       setRowData(res.data || []);
     } catch (err) {
       console.error('Fetch users failed:', err);
@@ -51,8 +106,7 @@ const UserGrid = () => {
         title: 'Error',
         text: 'Failed to load users.',
       });
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -61,52 +115,56 @@ const UserGrid = () => {
     fetchData();
   }, []);
 
- const handleDelete = async (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this! This employee will be permanently deleted.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",          // red for delete
-    cancelButtonColor: "#3085d6",        // blue for cancel
-    confirmButtonText: "Yes, delete it!",
-    cancelButtonText: "Cancel",
-    reverseButtons: true                 // puts Delete button on the right
-  }).then( (result) => {
-    if (result.isConfirmed) {
-      try {
-         axios.delete(`http://localhost:3001/api/users/${id}`);
-        
-        // Show success message
-         Swal.fire({
-          title: "Deleted!",
-          text: "Employee has been successfully deleted.",
-          icon: "success",
-          timer: 1800,              // auto close after 1.8 seconds
-          showConfirmButton: false
-        });
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this! This employee will be permanently deleted.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33', // red for delete
+      cancelButtonColor: '#3085d6', // blue for cancel
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true, // puts Delete button on the right
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios.delete(
+            `https://backend-express-social.vercel.app/api/users/${id}`,
+          );
 
-        // Refresh the list
-        fetchData();
+          // Show success message
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Employee has been successfully deleted.',
+            icon: 'success',
+            timer: 1800, // auto close after 1.8 seconds
+            showConfirmButton: false,
+          });
 
-      } catch (error) {
-        // Show error message if delete fails
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to delete employee. Please try again.",
-          icon: "error",
-          confirmButtonColor: "#3085d6"
-        });
-        console.error("Delete failed:", error);
+          // Refresh the list
+          fetchData();
+        } catch (error) {
+          // Show error message if delete fails
+          Swal.fire({
+            title: 'Error!',
+            text: 'Failed to delete employee. Please try again.',
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+          });
+          console.error('Delete failed:', error);
+        }
       }
-    }
-  });
-};
+    });
+  };
 
   const onCellValueChanged = async (event) => {
     const { data } = event;
     try {
-      await axios.put(`http://localhost:3001/api/users/${data.id}`, data);
+      await axios.put(
+        `https://backend-express-social.vercel.app/api/users/${data.id}`,
+        data,
+      );
       // Optional: success toast / mini notification
       // Swal.fire({ icon: 'success', title: 'Updated', timer: 1200, showConfirmButton: false });
     } catch (err) {
@@ -119,11 +177,18 @@ const UserGrid = () => {
     }
   };
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading users...</div>;
+  if (loading)
+    return (
+      <div style={{ padding: '40px', textAlign: 'center' }}>
+        Loading users...
+      </div>
+    );
 
   return (
-    <div >
-      <h2 className="mb-2 text-cyan-400 font-bold text-4xl">Users (React + AG Grid + Express + MySQL)</h2>
+    <div>
+      <h2 className='mb-2 text-cyan-400 font-bold text-4xl'>
+        Users (React + AG Grid + Express + MySQL)
+      </h2>
       <button
         onClick={fetchData}
         style={{
@@ -138,9 +203,11 @@ const UserGrid = () => {
       >
         Refresh Data
       </button>
-    <h1 className="text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4" >Created by:  Babar Ali</h1>
+      <h1 className='text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4'>
+        Created by: Babar Ali
+      </h1>
       <div
-        className="ag-theme-quartz-dark"
+        className='ag-theme-quartz-dark'
         style={{ height: 750, width: '100%' }}
       >
         <AgGridReact
@@ -157,7 +224,7 @@ const UserGrid = () => {
           paginationPageSize={15}
           paginationPageSizeSelector={[10, 15, 25, 50]}
           animateRows={true}
-          editType="fullRow"
+          editType='fullRow'
           onCellValueChanged={onCellValueChanged}
         />
       </div>

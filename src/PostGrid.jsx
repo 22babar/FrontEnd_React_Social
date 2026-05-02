@@ -86,7 +86,9 @@ const PostGrid = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3001/api/posts');
+      const res = await axios.get(
+        'https://backend-express-social.vercel.app/api/posts',
+      );
       setRowData(res.data || []);
     } catch (err) {
       console.error('Fetch users failed:', err);
@@ -118,7 +120,9 @@ const PostGrid = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          axios.delete(`http://localhost:3001/api/posts/${id}`);
+          axios.delete(
+            `https://backend-express-social.vercel.app/api/posts/${id}`,
+          );
 
           // Show success message
           Swal.fire({
@@ -148,7 +152,10 @@ const PostGrid = () => {
   const onCellValueChanged = async (event) => {
     const { data } = event;
     try {
-      await axios.put(`http://localhost:3001/api/posts/${data.id}`, data);
+      await axios.put(
+        `https://backend-express-social.vercel.app/api/posts/${data.id}`,
+        data,
+      );
       // Optional: success toast / mini notification
       // Swal.fire({ icon: 'success', title: 'Updated', timer: 1200, showConfirmButton: false });
     } catch (err) {
@@ -170,7 +177,9 @@ const PostGrid = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2 className="mb-2 text-cyan-400 font-bold text-4xl">Posts (React + AG Grid + Express + MySQL)</h2>
+      <h2 className='mb-2 text-cyan-400 font-bold text-4xl'>
+        Posts (React + AG Grid + Express + MySQL)
+      </h2>
       <button
         onClick={fetchData}
         style={{
@@ -185,7 +194,9 @@ const PostGrid = () => {
       >
         Refresh Data
       </button>
-    <h1 className="text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4" >Created by:  Babar Ali</h1>
+      <h1 className='text-3xl text-blue-400 border border-amber-400 rounded-2xl font-bold bg-gradient-to-r from-amber-950 to-amber-900 font-serif mb-4'>
+        Created by: Babar Ali
+      </h1>
 
       <div
         className='ag-theme-quartz-dark'
